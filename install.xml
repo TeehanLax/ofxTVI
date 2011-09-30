@@ -1,0 +1,25 @@
+<install>
+	<version>0.1</version>
+	<author>Peter Nitsch</author>
+	<url>github page</url>
+    
+	<requires>
+		<addon>ofxNetwork</addon>
+	</requires>
+   
+    <description><![CDATA[
+          Touch Vision Interface
+    ]]></description>
+    
+	<add>
+
+		<src>
+			<folder name="addons/ofxTVI/src">
+				<file>../../../addons/ofxTVI/src/ofxTVI.cpp</file>
+				<file>../../../addons/ofxTVI/src/ofxTVI.h</file>
+			</folder>
+		</src>
+		
+	</add>    
+    
+</install>
