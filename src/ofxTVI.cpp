@@ -8,12 +8,9 @@ ofxTVI::~ofxTVI(){
 	if(_is_listening) kill();
 }
 
-void ofxTVI::setup(string ip_address = "127.0.0.1") {
-	setIPAddress(ip_address);
+void ofxTVI::setup(int color=0xffffff) {
+	setBorderColor(color);
 	
-	/* TODO: explanation of locking to single IP port here
-	 *
-	 */
 	TCP.setup(11999);
 	TCP.setMessageDelimiter("\n");
 
@@ -22,17 +19,27 @@ void ofxTVI::setup(string ip_address = "127.0.0.1") {
 	_is_listening = true;
 }
 
-void ofxTVI::setIPAddress(string ip_address) {
-	_ip_address = ip_address;
+void ofxTVI::setBorderColor(int color) {
+	_border_color = color;
+}
+
+int ofxTVI::getBorderColor() {
+	return _border_color;
 }
 
 void ofxTVI::draw() {
-	ofSetColor(255, 255, 255);
+	_border_size = ofGetWidth() * OFX_TVI_BORDER_RATIO;
+	
 	ofFill();
-	ofRect(0, 0, ofGetWidth(), BORDER_SIZE);
-	ofRect(ofGetWidth() - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, ofGetHeight() - BORDER_SIZE * 2);
-	ofRect(0, ofGetHeight() - BORDER_SIZE, ofGetWidth(), BORDER_SIZE);
-	ofRect(0, BORDER_SIZE, BORDER_SIZE, ofGetHeight() - BORDER_SIZE * 2);
+	ofSetHexColor(_border_color);
+	
+	int h_size = (ofGetWidth() - (_border_size*2))/8;
+	int v_size = (ofGetHeight() - (_border_size*2))/8;
+	
+	ofRect(0, 0, ofGetWidth(), _border_size);
+	ofRect(ofGetWidth() - _border_size, _border_size, _border_size, ofGetHeight() - _border_size * 2);
+	ofRect(0, ofGetHeight() - _border_size, ofGetWidth(), _border_size);
+	ofRect(0, _border_size, _border_size, ofGetHeight() - _border_size * 2);
 }
 
 void ofxTVI::kill() {
