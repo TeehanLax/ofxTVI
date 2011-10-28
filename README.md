@@ -1,8 +1,8 @@
-# ofxTVI - TVI client addon for openFrameworks
+# ofxTVI - Touch Vision Interface client addon for openFrameworks
 
-Receives touch events from TVI device via TCP. TVI Android app coming soon.
+Receives touch events from TVI device via TCP socket connection. Android app coming soon. For more information about TVI, [read our blog post](http://www.teehanlax.com/labs/tvi/).
 
-## Usage
+## Sample Usage
 
 .h:
 
@@ -10,19 +10,26 @@ Receives touch events from TVI device via TCP. TVI Android app coming soon.
 	int touchX;
 	int touchY;
 
-setup():
+.cpp:
 
-	tvi.setup( OFX_TVI_COLOR_WHITE );
-	ofAddListener(ofEvents.touchMoved, this, &testApp::touchMoved);
+	void testApp::setup(){
+		ofSetFullscreen(true);
+		ofSetVerticalSync(true);
+		
+		tvi.setup( OFX_TVI_COLOR_WHITE );
+		ofAddListener(ofEvents.touchMoved, this, &testApp::touchMoved);
+	}
 
-Event handler:
+	void testApp::draw(){
+		ofBackground(0, 0, 0);
+		
+		ofSetColor(255, 0, 0);
+		ofCircle(touchX, touchY, 50);
+		
+		tvi.draw();
+	}
 
 	void testApp::touchMoved(ofTouchEventArgs &touch) {
 		touchX = (int)touch.x;
 		touchY = (int)touch.y;
 	}
-
-draw():
-
-	ofCircle(touchX, touchY, 50);
-	tvi.draw(); // draw border
